@@ -1,4 +1,4 @@
-// Copyright 2016 Clearpath Robotics, BSD
+
 
 #include <ros/ros.h>
 
