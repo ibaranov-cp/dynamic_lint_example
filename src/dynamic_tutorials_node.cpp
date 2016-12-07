@@ -1,10 +1,11 @@
-
-
 #include <ros/ros.h>
 
 #include <dynamic_reconfigure/server.h>
 #include <dynamic_lint_example/TutorialsConfig.h>
 #include <std_msgs/String.h>
+
+// This is a custom Message!
+#include <dynamic_lint_example/custom.h>
 
 std_msgs::String msg;
 
@@ -30,12 +31,20 @@ int main(int argc, char **argv)
   server.setCallback(f);
 
   ros::Publisher pub = nh.advertise<std_msgs::String>("dynamic_string", 1);
+  ros::Publisher pub2 = nh.advertise<dynamic_lint_example::custom>("custom_topic", 1);
 
-  ROS_INFO("Spinning node");
+  ROS_WARN("Spinning node");
   ros::Rate rate(10);
+
+  dynamic_lint_example::custom msg2;
+
+  msg2.robot = "Jackal";
+  msg2.distance = 12;
+
   while (ros::ok())
   {
     pub.publish(msg);
+    pub2.publish(msg2);
     ros::spinOnce();
     rate.sleep();
   }
